@@ -21,14 +21,14 @@ import com.automation.util.ConfigReader;
 import com.automation.util.ExcelUtil;
 
 @RunWith(Parameterized.class)
-public class Testcasesuite {
+public class RunTestCases {
 	
 	protected  static String CHROME_DRIVER="D:\\mydrivers\\chromedriver.exe";
 	protected  static String EXCEL_PATH="C:\\Users\\Administrator\\Documents\\DemoTest.xlsx";
     static ConfigReader reader=new ConfigReader();
     TestCaseMapper testcasemapper; 
 	
-    public Testcasesuite(TestCaseMapper testcasemapper) {
+    public RunTestCases(TestCaseMapper testcasemapper) {
      this.testcasemapper=testcasemapper;
     
     }
