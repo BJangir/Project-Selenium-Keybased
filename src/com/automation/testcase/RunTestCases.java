@@ -28,12 +28,12 @@ public class RunTestCases {
 	
     static ConfigReader reader=new ConfigReader();
     TestCaseMapper testcasemapper; 
-
+  String testcasename;
     final static Logger logger = Logger.getLogger(RunTestCases.class);
     
-    public RunTestCases(TestCaseMapper testcasemapper) {
+    public RunTestCases(TestCaseMapper testcasemapper,Object testcasename) {
      this.testcasemapper=testcasemapper;
-    
+    this.testcasename=(String)testcasename;
     }
     
     static{
@@ -43,16 +43,15 @@ public class RunTestCases {
     }
     
     
-    @Parameters(name="{0}")
-    public static List<TestCaseMapper[]> getTestCases() throws IOException{
-    	
+    @Parameters(name="{1}")
+    public static List<Object[]> getTestCases() throws IOException{
     	ExcelUtil util=new ExcelUtil();
 		List<String[]> teststeps = util.getExcelDataBasedOnRunCol(reader.getKeyValue("EXCEL_PATH"), "TestSteps", 8);
 		List<String[]> testTestcases = util.getExcelDataBasedOnRunCol(reader.getKeyValue("EXCEL_PATH"), "TestCases", 3);
 		
 		ActionUtil actionUtil=new ActionUtil();
 		//List<TestStepModel> testCaseModel = actionUtil.getTestCaseModel(teststeps);
-		List<TestCaseMapper[]> testCaseToStepsMapping  = actionUtil.getTestCaseToStepsMapping(teststeps, testTestcases);
+		List<Object[]> testCaseToStepsMapping  = actionUtil.getTestCaseToStepsMapping(teststeps, testTestcases);
 		logger.info("Total TestCase found "+testCaseToStepsMapping.size());
 		return testCaseToStepsMapping;
     	
