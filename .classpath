@@ -1,50 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-	<classpathentry kind="lib" path="D:/Eclipseworkspace/Project-Core/lib/ant-apache-log4j.jar"/>
-	<classpathentry kind="lib" path="D:/Eclipseworkspace/Project-Core/lib/apache-log4j-extras-1.2.17.jar"/>
-	<classpathentry kind="lib" path="D:/Eclipseworkspace/Project-Core/lib/cglib-nodep-3.2.4.jar"/>
-	<classpathentry kind="lib" path="D:/Eclipseworkspace/Project-Core/lib/client-combined-3.0.1-nodeps.jar"/>
-	<classpathentry kind="lib" path="D:/Eclipseworkspace/Project-Core/lib/commons-codec-1.10.jar"/>
-	<classpathentry kind="lib" path="D:/Eclipseworkspace/Project-Core/lib/commons-exec-1.3.jar"/>
-	<classpathentry kind="lib" path="D:/Eclipseworkspace/Project-Core/lib/commons-io-2.5.jar"/>
-	<classpathentry kind="lib" path="D:/Eclipseworkspace/Project-Core/lib/commons-lang3-3.4.jar"/>
-	<classpathentry kind="lib" path="D:/Eclipseworkspace/Project-Core/lib/commons-logging-1.2.jar"/>
-	<classpathentry kind="lib" path="D:/Eclipseworkspace/Project-Core/lib/cssparser-0.9.20.jar"/>
-	<classpathentry kind="lib" path="D:/Eclipseworkspace/Project-Core/lib/dom4j-1.6.1.jar"/>
-	<classpathentry kind="lib" path="D:/Eclipseworkspace/Project-Core/lib/geronimo-stax-api_1.0_spec-1.0.jar"/>
-	<classpathentry kind="lib" path="D:/Eclipseworkspace/Project-Core/lib/gson-2.3.1.jar"/>
-	<classpathentry kind="lib" path="D:/Eclipseworkspace/Project-Core/lib/guava-19.0.jar"/>
-	<classpathentry kind="lib" path="D:/Eclipseworkspace/Project-Core/lib/hamcrest-core-1.3.jar"/>
-	<classpathentry kind="lib" path="D:/Eclipseworkspace/Project-Core/lib/hamcrest-library-1.3.jar"/>
-	<classpathentry kind="lib" path="D:/Eclipseworkspace/Project-Core/lib/htmlunit-2.23.jar"/>
-	<classpathentry kind="lib" path="D:/Eclipseworkspace/Project-Core/lib/htmlunit-core-js-2.23.jar"/>
-	<classpathentry kind="lib" path="D:/Eclipseworkspace/Project-Core/lib/httpclient-4.5.2.jar"/>
-	<classpathentry kind="lib" path="D:/Eclipseworkspace/Project-Core/lib/httpcore-4.4.4.jar"/>
-	<classpathentry kind="lib" path="D:/Eclipseworkspace/Project-Core/lib/httpmime-4.5.2.jar"/>
-	<classpathentry kind="lib" path="D:/Eclipseworkspace/Project-Core/lib/javax.servlet-api-3.1.0.jar"/>
-	<classpathentry kind="lib" path="D:/Eclipseworkspace/Project-Core/lib/jetty-io-9.2.13.v20150730.jar"/>
-	<classpathentry kind="lib" path="D:/Eclipseworkspace/Project-Core/lib/jetty-util-9.2.13.v20150730.jar"/>
-	<classpathentry kind="lib" path="D:/Eclipseworkspace/Project-Core/lib/jna-4.1.0.jar"/>
-	<classpathentry kind="lib" path="D:/Eclipseworkspace/Project-Core/lib/jna-platform-4.1.0.jar"/>
-	<classpathentry kind="lib" path="D:/Eclipseworkspace/Project-Core/lib/junit-4.12.jar"/>
-	<classpathentry kind="lib" path="D:/Eclipseworkspace/Project-Core/lib/log4j-1.2.12.jar"/>
-	<classpathentry kind="lib" path="D:/Eclipseworkspace/Project-Core/lib/neko-htmlunit-2.23.jar"/>
-	<classpathentry kind="lib" path="D:/Eclipseworkspace/Project-Core/lib/netty-3.5.7.Final.jar"/>
-	<classpathentry kind="lib" path="D:/Eclipseworkspace/Project-Core/lib/phantomjsdriver-1.3.0.jar"/>
-	<classpathentry kind="lib" path="D:/Eclipseworkspace/Project-Core/lib/poi-3.7-20101029.jar"/>
-	<classpathentry kind="lib" path="D:/Eclipseworkspace/Project-Core/lib/poi-ooxml-3.7-20101029.jar"/>
-	<classpathentry kind="lib" path="D:/Eclipseworkspace/Project-Core/lib/poi-ooxml-schemas-3.7-20101029.jar"/>
-	<classpathentry kind="lib" path="D:/Eclipseworkspace/Project-Core/lib/sac-1.3.jar"/>
-	<classpathentry kind="lib" path="D:/Eclipseworkspace/Project-Core/lib/serializer-2.7.2.jar"/>
-	<classpathentry kind="lib" path="D:/Eclipseworkspace/Project-Core/lib/websocket-api-9.2.15.v20160210.jar"/>
-	<classpathentry kind="lib" path="D:/Eclipseworkspace/Project-Core/lib/websocket-client-9.2.15.v20160210.jar"/>
-	<classpathentry kind="lib" path="D:/Eclipseworkspace/Project-Core/lib/websocket-common-9.2.15.v20160210.jar"/>
-	<classpathentry kind="lib" path="D:/Eclipseworkspace/Project-Core/lib/xalan-2.7.2.jar"/>
-	<classpathentry kind="lib" path="D:/Eclipseworkspace/Project-Core/lib/xercesImpl-2.11.0.jar"/>
-	<classpathentry kind="lib" path="D:/Eclipseworkspace/Project-Core/lib/xml-apis-1.4.01.jar"/>
-	<classpathentry kind="lib" path="D:/Eclipseworkspace/Project-Core/lib/xmlbeans-2.3.0.jar"/>
-	<classpathentry kind="output" path="bin"/>
+	<classpathentry kind="src" output="target/classes" path="src">
+		<attributes>
+			<attribute name="optional" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="output" path="target/classes"/>
 </classpath>
