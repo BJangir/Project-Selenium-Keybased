@@ -7,6 +7,10 @@ import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameter;
+import org.junit.runners.Parameterized.Parameters;
 
 import com.automation.action.ActionExecution;
 import com.automation.action.ActionUtil;
@@ -16,27 +20,41 @@ import com.automation.core.util.WebDriverUtil;
 import com.automation.util.ConfigReader;
 import com.automation.util.ExcelUtil;
 
+@RunWith(Parameterized.class)
 public class Testcasesuite {
 	
 	protected  static String CHROME_DRIVER="D:\\mydrivers\\chromedriver.exe";
 	protected  static String EXCEL_PATH="C:\\Users\\Administrator\\Documents\\DemoTest.xlsx";
-	static List<TestCaseMapper> testCaseToStepsMapping;
     static ConfigReader reader=new ConfigReader();
+    TestCaseMapper testcasemapper; 
 	
-	
+    public Testcasesuite(TestCaseMapper testcasemapper) {
+     this.testcasemapper=testcasemapper;
+    
+    }
+    
+    
+    @Parameters(name="{0}")
+    public static List<TestCaseMapper[]> getTestCases() throws IOException{
+    	ExcelUtil util=new ExcelUtil();
+    	
+		List<String[]> teststeps = util.getExcelDataBasedOnRunCol(EXCEL_PATH, "TestSteps", 8);
+		List<String[]> testTestcases = util.getExcelDataBasedOnRunCol(reader.getKeyValue("EXCEL_PATH"), "TestCases", 3);
+		
+		ActionUtil actionUtil=new ActionUtil();
+		//List<TestStepModel> testCaseModel = actionUtil.getTestCaseModel(teststeps);
+		List<TestCaseMapper[]> testCaseToStepsMapping  = actionUtil.getTestCaseToStepsMapping(teststeps, testTestcases);
+		return testCaseToStepsMapping;
+    	
+    }
+    
 	@BeforeClass
 	public static void beforeClass() throws IOException{
 		if(Boolean.parseBoolean(reader.getKeyValue("START_BROWSER_FIRST"))){
 			WebDriverUtil driverUtil=new WebDriverUtil("Chrome", CHROME_DRIVER);
 			driverUtil.openBrowser(reader.getKeyValue("BROWSER_URL") );
 		}
-		ExcelUtil util=new ExcelUtil();
-		List<String[]> teststeps = util.getExcelDataBasedOnRunCol(EXCEL_PATH, "TestSteps", 8);
-		List<String[]> testTestcases = util.getExcelDataBasedOnRunCol(reader.getKeyValue("EXCEL_PATH"), "TestCases", 3);
 		
-		ActionUtil actionUtil=new ActionUtil();
-		List<TestStepModel> testCaseModel = actionUtil.getTestCaseModel(teststeps);
-		testCaseToStepsMapping = actionUtil.getTestCaseToStepsMapping(teststeps, testTestcases);
 		
 	}
 	
@@ -44,31 +62,32 @@ public class Testcasesuite {
 	public void testme()
 	{
 
-		for(TestCaseMapper caseMapper:testCaseToStepsMapping){
-	   
-			List<TestStepModel> testmodel = caseMapper.getTm();
-			ActionExecution execution=new ActionExecution();
-			int size = testmodel.size();
-			boolean testcasestatus=false;
-			for(int i=0;i<size;i++){
-				
-				if(i==size-1){
-					testcasestatus = execution.executeAction(testmodel.get(i));
-					
-				}
-				else{
-					execution.executeActionSequence(testmodel.get(i));
-				}
+
+		   
+		List<TestStepModel> testmodel = testcasemapper.getTm();
+		ActionExecution execution=new ActionExecution();
+		int size = testmodel.size();
+		boolean testcasestatus=false;
+		for(int i=0;i<size;i++){
+			
+			if(i==size-1){
+				testcasestatus = execution.executeAction(testmodel.get(i));
 				
 			}
-			
-			Assert.assertTrue(testcasestatus);
-			
-			
-			
-			
+			else{
+				execution.executeActionSequence(testmodel.get(i));
+			}
 			
 		}
+		
+		Assert.assertTrue(testcasestatus);
+		
+		
+		
+		
+		
+	
+		
 		
 		
 		//PropertyConfigurator.configure("log4j.properties");

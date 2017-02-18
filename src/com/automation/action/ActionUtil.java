@@ -39,11 +39,12 @@ public class ActionUtil {
 	}
 	
 	
-	public List<TestCaseMapper> getTestCaseToStepsMapping(List<String[]> teststeps,List<String[]> testTestcases){
-		
+	public List<TestCaseMapper[]>  getTestCaseToStepsMapping(List<String[]> teststeps,List<String[]> testTestcases){
+	List<TestCaseMapper[]> caseMappers=new ArrayList<>();
 	List<TestCaseMapper> testCaseMappers=new ArrayList<>();
 	
 		for(String tc[]:testTestcases){
+			TestCaseMapper[] testCaseMappers2=new TestCaseMapper[1];
 			TestCaseMapper mapper=new TestCaseMapper();
 			List<String[]> tmp=new ArrayList<>();
 			
@@ -56,11 +57,12 @@ public class ActionUtil {
 			mapper.setTestcaseid(tc[0]);
 			mapper.setDesc(tc[1]);
 			mapper.setTm(testStepCaseModel);
-			testCaseMappers.add(mapper);
-
+			testCaseMappers2[0]=mapper;
+			//testCaseMappers.add(mapper);
+			caseMappers.add(testCaseMappers2);
 		}
 		
-		return testCaseMappers;
+		return caseMappers;
 	}
 	
 
