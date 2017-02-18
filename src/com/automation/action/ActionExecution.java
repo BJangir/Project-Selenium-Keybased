@@ -4,11 +4,11 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Assert;
+import org.apache.log4j.Logger;
 
 public class ActionExecution {
 	
-	
+	final static Logger logger = Logger.getLogger(ActionExecution.class);
 	public boolean executeAction(TestStepModel tm)
 	{
 		/*String precondition_action = tm.getTestcase_action();
@@ -25,6 +25,7 @@ public class ActionExecution {
 		switch (testcase_action) {
 		case "isTextPresentInPage":
 			String res = (String)executeActionSequence2.get(0);
+			logger.info(" isTextPresentInPage result is"+res);
 			 testcasestatus = Boolean.parseBoolean(res);
 			break;
 		default:

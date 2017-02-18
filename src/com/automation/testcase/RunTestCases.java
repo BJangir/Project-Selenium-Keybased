@@ -3,13 +3,14 @@ package com.automation.testcase;
 import java.io.IOException;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
 
 import com.automation.action.ActionExecution;
@@ -20,30 +21,39 @@ import com.automation.core.util.WebDriverUtil;
 import com.automation.util.ConfigReader;
 import com.automation.util.ExcelUtil;
 
+
+
 @RunWith(Parameterized.class)
 public class RunTestCases {
 	
-	protected  static String CHROME_DRIVER="D:\\mydrivers\\chromedriver.exe";
-	protected  static String EXCEL_PATH="C:\\Users\\Administrator\\Documents\\DemoTest.xlsx";
     static ConfigReader reader=new ConfigReader();
     TestCaseMapper testcasemapper; 
-	
+
+    final static Logger logger = Logger.getLogger(RunTestCases.class);
+    
     public RunTestCases(TestCaseMapper testcasemapper) {
      this.testcasemapper=testcasemapper;
     
     }
     
+    static{
+    	String property = System.getProperty("auto.log4j.path", "log4j.properties");
+    	
+    	PropertyConfigurator.configure(property);
+    }
+    
     
     @Parameters(name="{0}")
     public static List<TestCaseMapper[]> getTestCases() throws IOException{
-    	ExcelUtil util=new ExcelUtil();
     	
-		List<String[]> teststeps = util.getExcelDataBasedOnRunCol(EXCEL_PATH, "TestSteps", 8);
+    	ExcelUtil util=new ExcelUtil();
+		List<String[]> teststeps = util.getExcelDataBasedOnRunCol(reader.getKeyValue("EXCEL_PATH"), "TestSteps", 8);
 		List<String[]> testTestcases = util.getExcelDataBasedOnRunCol(reader.getKeyValue("EXCEL_PATH"), "TestCases", 3);
 		
 		ActionUtil actionUtil=new ActionUtil();
 		//List<TestStepModel> testCaseModel = actionUtil.getTestCaseModel(teststeps);
 		List<TestCaseMapper[]> testCaseToStepsMapping  = actionUtil.getTestCaseToStepsMapping(teststeps, testTestcases);
+		logger.info("Total TestCase found "+testCaseToStepsMapping.size());
 		return testCaseToStepsMapping;
     	
     }
@@ -51,7 +61,8 @@ public class RunTestCases {
 	@BeforeClass
 	public static void beforeClass() throws IOException{
 		if(Boolean.parseBoolean(reader.getKeyValue("START_BROWSER_FIRST"))){
-			WebDriverUtil driverUtil=new WebDriverUtil("Chrome", CHROME_DRIVER);
+			reader.getKeyValue("");
+			WebDriverUtil driverUtil=new WebDriverUtil("Chrome", reader.getKeyValue("CHROME_DRIVER") );
 			driverUtil.openBrowser(reader.getKeyValue("BROWSER_URL") );
 		}
 		
@@ -103,27 +114,22 @@ public class RunTestCases {
 	
 	
 	
-	public static void main(String[] args) throws IOException {
-		WebDriverUtil driverUtil=new WebDriverUtil("Chrome", CHROME_DRIVER);
+	public static void main(String[] args) throws IOException {/*
+		WebDriverUtil driverUtil=new WebDriverUtil("Chrome", "");
 		driverUtil.openBrowser("http://xcelerator.ninja");
 		ExcelUtil util=new ExcelUtil();
 		//List<String[]> excelData = util.getExcelData(EXCEL_PATH, "Pages", "5");
 		
-		List<String[]> testcaseData = util.getExcelDataBasedOnRunCol(EXCEL_PATH, "Testcase", 6);
+		List<String[]> testcaseData = util.getExcelDataBasedOnRunCol("", "Testcase", 6);
 		ActionUtil actionUtil=new ActionUtil();
 		List<TestStepModel> testCaseModel = actionUtil.getTestCaseModel(testcaseData);
 		
-		for(TestStepModel tm:testCaseModel){
-
-			ActionExecution execution=new ActionExecution();
-			execution.executeAction(tm);
-		}
+	
 		
 		
 		
 		
-		
-	}
+	*/}
 
 
 	
