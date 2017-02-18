@@ -1,0 +1,40 @@
+<project name="Automation" default="runJunit" basedir=".">
+  <description>
+   run automation 
+  </description>
+  <!-- set global properties for this build -->
+  <property name="src" location="src"/>
+  <property name="result" location="${basedir}/result"/>
+  <property name="automation.classpath" location="${basedir}/target/Project-Selenium-Keybased-0.0.1-SNAPSHOT-jar-with-dependencies.jar"/>
+
+
+ 
+  <target name="runJunit">
+   <delete dir="${result}" includeEmptyDirs="true" failonerror="false"/>
+   <mkdir dir="${result}"/>
+  
+  
+   <junit haltonerror="false" haltonfailure="false">
+       
+        <classpath>
+          <pathelement location="${automation.classpath}"/>
+        </classpath>
+           
+            <formatter type="xml"/>
+          
+            <test name="com.automation.testcase.RunTestCases" todir="${result}"/>
+
+    </junit>
+	
+	<junitreport todir="${result}">
+  <fileset dir="${result}">
+    <include name="TEST-*.xml"/>
+  </fileset>
+  <report format="frames" todir="${result}/html"/>
+</junitreport>
+
+
+  </target>
+  
+ 
+</project>

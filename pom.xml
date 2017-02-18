@@ -4,6 +4,7 @@
   <artifactId>Project-Selenium-Keybased</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>SeleniumAutomation</name>
+  <packaging>jar</packaging>
   <description>This is Automation framework</description>
   <build>
     <sourceDirectory>src</sourceDirectory>
@@ -16,6 +17,38 @@
           <target>1.8</target>
         </configuration>
       </plugin>
+	  
+	  
+	  <plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>2.4.1</version>
+				<configuration>
+					<!-- get all project dependencies -->
+					<descriptorRefs>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
+					<!-- MainClass in mainfest make a executable jar -->
+					<archive>
+					  <manifest>
+						<mainClass>com.automation.testcase.RunTestCases</mainClass>
+					  </manifest>
+					</archive>
+
+				</configuration>
+				<executions>
+				  <execution>
+					<id>make-assembly</id>
+                                        <!-- bind to the packaging phase -->
+					<phase>package</phase>
+					<goals>
+						<goal>single</goal>
+					</goals>
+				  </execution>
+				</executions>
+			</plugin>
+	  
+	  
     </plugins>
   </build>
   
@@ -53,7 +86,13 @@
 			
 		</dependency>
 		
-		
+		<dependency>
+    <groupId>xerces</groupId>
+    <artifactId>xercesImpl</artifactId>
+    <version>2.10.0</version>
+          </dependency>
+
+
             <dependency>
                 <groupId>org.seleniumhq.selenium</groupId>
                 <artifactId>selenium-server</artifactId>
