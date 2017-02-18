@@ -2,6 +2,7 @@ package com.automation.core.util;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 public class WebDriverUtil {
@@ -11,12 +12,36 @@ public class WebDriverUtil {
  
  public WebDriverUtil(String driverType,String driverpath) {
 	 System.setProperty("webdriver.chrome.driver",driverpath);
-	 driver=new ChromeDriver();
+	switch (driverType.toUpperCase().trim()) {
+	case "CHROME":
+		 driver=new ChromeDriver();
+		break;
+
+	case "MOZILLA":
+		 driver=new FirefoxDriver();
+		break;
+		
+	default:
+		break;
+	}
+	 
+	
 }
  
  public WebDriverUtil(String driverType,String driverpath,DesiredCapabilities desiredCap) {
 	 System.setProperty("webdriver.chrome.driver",driverpath);
-	 driver=new ChromeDriver(desiredCap);
+	 switch (driverType.toUpperCase().trim()) {
+		case "CHROME":
+			 driver=new ChromeDriver(desiredCap);
+			break;
+
+		case "MOZILLA":
+			 driver=new FirefoxDriver(desiredCap);
+			break;
+			
+		default:
+			break;
+		}
 }
  
  public  WebDriver getDriver(){

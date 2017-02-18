@@ -71,7 +71,7 @@ public class Actions {
 		String[] split = mytext.split("\n");
 		List<String> asList = Arrays.asList(split);
 		String getdata = model.getdata();
-		logger.info(model.getTestcaseId()+"-"+model.getTestcaseId()+"Actual values="+asList+" Expected Values= "+getdata);
+		logger.info(model.getTestcaseId()+"-"+model.getTestStep()+" Actual values="+asList+" Expected Values= "+getdata);
 		boolean contains = asList.contains(getdata);
 		return contains?"true":"false";
 

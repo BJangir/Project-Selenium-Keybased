@@ -60,8 +60,7 @@ public class RunTestCases {
 	@BeforeClass
 	public static void beforeClass() throws IOException{
 		if(Boolean.parseBoolean(reader.getKeyValue("START_BROWSER_FIRST"))){
-			reader.getKeyValue("");
-			WebDriverUtil driverUtil=new WebDriverUtil("Chrome", reader.getKeyValue("CHROME_DRIVER") );
+			WebDriverUtil driverUtil=new WebDriverUtil(reader.getKeyValue("BROWSER_TYPE"), reader.getKeyValue("CHROME_DRIVER") );
 			driverUtil.openBrowser(reader.getKeyValue("BROWSER_URL") );
 		}
 		

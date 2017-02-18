@@ -3,7 +3,8 @@
    run automation 
   </description>
   <!-- set global properties for this build -->
-  <property name="src" location="src"/>
+  <property name="auto.log4j.path" location="${basedir}/log4j.properties"/>
+   <property name="conf.path" location="${basedir}/conf.properties"/>
   <property name="result" location="${basedir}/result"/>
   <property name="automation.classpath" location="${basedir}/target/Project-Selenium-Keybased-0.0.1-SNAPSHOT-jar-with-dependencies.jar"/>
 
@@ -15,7 +16,8 @@
   
   
    <junit haltonerror="false" haltonfailure="false">
-       
+        <jvmarg value="-Dauto.log4j.path=${auto.log4j.path}"/>
+		 <jvmarg value="-Dconf.path=${conf.path}"/>
         <classpath>
           <pathelement location="${automation.classpath}"/>
         </classpath>
