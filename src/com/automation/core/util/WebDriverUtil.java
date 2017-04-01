@@ -11,13 +11,15 @@ public class WebDriverUtil {
 
  
  public WebDriverUtil(String driverType,String driverpath) {
-	 System.setProperty("webdriver.chrome.driver",driverpath);
+	
 	switch (driverType.toUpperCase().trim()) {
 	case "CHROME":
+		 System.setProperty("webdriver.chrome.driver",driverpath);
 		 driver=new ChromeDriver();
 		break;
 
 	case "MOZILLA":
+		 System.setProperty("webdriver.chrome.driver",driverpath);
 		 driver=new FirefoxDriver();
 		break;
 		

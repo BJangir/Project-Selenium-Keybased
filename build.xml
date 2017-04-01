@@ -15,7 +15,7 @@
    <mkdir dir="${result}"/>
   
   
-   <junit haltonerror="false" haltonfailure="false">
+   <junit haltonerror="false" haltonfailure="false" >
         <jvmarg value="-Dauto.log4j.path=${auto.log4j.path}"/>
 		 <jvmarg value="-Dconf.path=${conf.path}"/>
         <classpath>

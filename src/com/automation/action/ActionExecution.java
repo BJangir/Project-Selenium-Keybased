@@ -9,13 +9,10 @@ import org.apache.log4j.Logger;
 public class ActionExecution {
 	
 	final static Logger logger = Logger.getLogger(ActionExecution.class);
+	String resultMessage;
 	public boolean executeAction(TestStepModel tm)
 	{
-		/*String precondition_action = tm.getTestcase_action();
-		if(!precondition_action.equalsIgnoreCase("NA")){
-			executeActionSequence(precondition_action);
-		}
-		*/
+		
 		
 		List<Object> executeActionSequence2 = executeActionSequence(tm);
 		
@@ -27,7 +24,11 @@ public class ActionExecution {
 			String res = (String)executeActionSequence2.get(0);
 			logger.info(" isTextPresentInPage result is"+res);
 			 testcasestatus = Boolean.parseBoolean(res);
-			break;
+			 if(!testcasestatus){
+				 resultMessage="Text \""+tm.getdata()+"\"does not exists in the list.Please check logs"; 
+			 }
+			 break;
+		
 		default:
 			break;
 		}
@@ -39,7 +40,9 @@ public class ActionExecution {
 		
 	}
 	
-	
+	public String getFailMessage(){
+		return resultMessage;
+	}
 	
 public List<Object> executeActionSequence(TestStepModel tm){
 	

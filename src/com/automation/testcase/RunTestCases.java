@@ -1,12 +1,18 @@
 package com.automation.testcase;
 
 import java.io.IOException;
+import java.math.BigInteger;
+import java.security.SecureRandom;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,6 +25,7 @@ import com.automation.action.TestCaseMapper;
 import com.automation.action.TestStepModel;
 import com.automation.core.util.WebDriverUtil;
 import com.automation.util.ConfigReader;
+import com.automation.util.ConnectionUtil;
 import com.automation.util.ExcelUtil;
 
 
@@ -68,46 +75,109 @@ public class RunTestCases {
 	}
 	
 	@Test
-	public void testme()
+	public void testcaseExecution()
 	{
-
-
-		   
 		List<TestStepModel> testmodel = testcasemapper.getTm();
 		ActionExecution execution=new ActionExecution();
 		int size = testmodel.size();
 		boolean testcasestatus=false;
 		for(int i=0;i<size;i++){
 			
-			if(i==size-1){
+			if(testmodel.get(i).getTestcase_action().equalsIgnoreCase("closeBrowser")){
+				execution.executeActionSequence(testmodel.get(i));
+			}
+			else{
 				testcasestatus = execution.executeAction(testmodel.get(i));
+			}
+			
+			
+			/*if(i==size-1){
+				if(testmodel.get(i).getTestcase_action().equalsIgnoreCase("closeBrowser")){
+					execution.executeActionSequence(testmodel.get(i));
+				}
+				else{
+					testcasestatus = execution.executeAction(testmodel.get(i));
+				}
 				
 			}
 			else{
+				
+				
 				execution.executeActionSequence(testmodel.get(i));
-			}
+			}*/
 			
 		}
-		
-		Assert.assertTrue(testcasestatus);
-		
-		
-		
-		
-		
-	
-		
-		
-		
-		//PropertyConfigurator.configure("log4j.properties");
+		Assert.assertTrue(execution.getFailMessage(), testcasestatus);
 		
 	}
 	
 	
+	@Before
+	public void precondition(){
+		
+		ConnectionUtil util=new ConnectionUtil();
+		Connection connection = util.getConnection();
+		resetUsers(util, connection);
+		util.closeConnection();
+		
+	
+		}
+
+	private void resetUsers(ConnectionUtil util, Connection connection) {
+		String updatequery="update profiles set email_address = ? ,phone =? where email_address = ?";
+	      try {
+	    	  PreparedStatement preparedStmt = connection.prepareStatement(updatequery);
+	    	   String nextEmail = nextEmail();
+	    	   String nextPhoneNo = nextPhoneNo();
+	    	  preparedStmt.setString(1, nextEmail);
+	    	  preparedStmt.setString(2, nextPhoneNo);
+	    	  preparedStmt.setString(3, reader.getKeyValue("test.user"));
+	    	  util.updateRecords(updatequery, preparedStmt);
+	    	  
+	    	   updatequery="update users set username = ? ,email =? where email = ?";
+	    	   preparedStmt = connection.prepareStatement(updatequery);
+	    	  preparedStmt.setString(1, nextEmail);
+	    	  preparedStmt.setString(2, nextEmail);
+	    	  preparedStmt.setString(3, reader.getKeyValue("test.user"));
+	    	  util.updateRecords(updatequery, preparedStmt);
+	    	  
+	    	  
+		} catch (SQLException e) {
+			logger.error("Update is failled for tables profiles and users");
+			e.printStackTrace();
+		}
+	}
+	
+	
+	public String nextEmail() {
+		SecureRandom random = new SecureRandom();
+		String email = new BigInteger(130, random).toString(32);
+	    return email+"@gmail.com";
+	  }
+	
+	public String nextPhoneNo() {
+		SecureRandom random = new SecureRandom();
+		long maximum=9999999999l;
+		int minimum=1000000000;
+		long randomNum =  random.nextInt(minimum)+ minimum;
+		if(randomNum>maximum){
+			randomNum=randomNum-minimum;
+		}
+		return randomNum+"";
+	  }
+	
+
+	
 	
 	@AfterClass
 	public static void postClass() throws IOException{
-		WebDriverUtil.driver.quit();
+		try{
+			WebDriverUtil.driver.quit();
+		}catch (Exception e) {
+			logger.info("Seems driver is closed already.Ignorning");
+		}
+		
+		
 	}
 	
 	
