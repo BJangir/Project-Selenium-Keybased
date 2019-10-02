@@ -10,13 +10,9 @@ import org.apache.log4j.Logger;
 public class ActionExecution {
 
 	final static Logger logger = Logger.getLogger(ActionExecution.class);
-
+	String resultMessage;
 	public boolean executeAction(TestStepModel tm) {
-		/*
-		 * String precondition_action = tm.getTestcase_action();
-		 * if(!precondition_action.equalsIgnoreCase("NA")){
-		 * executeActionSequence(precondition_action); }
-		 */
+		
 
 		List<Object> executeActionSequence2 = executeActionSequence(tm);
 
@@ -25,11 +21,13 @@ public class ActionExecution {
 
 		switch (testcase_action) {
 		case "isTextPresentInPage":
-			String res = (String) executeActionSequence2.get(0);
-			logger.info(" isTextPresentInPage result is " + res);
-			testcasestatus = Boolean.parseBoolean(res);
-			break;
-
+			String res = (String)executeActionSequence2.get(0);
+			logger.info(" isTextPresentInPage result is"+res);
+			 testcasestatus = Boolean.parseBoolean(res);
+			 if(!testcasestatus){
+				 resultMessage="Text \""+tm.getdata()+"\"does not exists in the list.Please check logs"; 
+			 }
+			 break;
 		case "countLinks":
 
 			String result = (String) executeActionSequence2.get(0);
@@ -81,23 +79,29 @@ public class ActionExecution {
 		// Boolean.parseBoolean(tm.getExpectation_check()));
 
 	}
-
-	public List<Object> executeActionSequence(TestStepModel tm) {
-
-		String action = tm.getTestcase_action();
-		List<Object> result = new ArrayList<>();
-		try {
-			Method declaredMethod;
-			Actions actions = new Actions();
-			declaredMethod = Actions.class.getDeclaredMethod(action, TestStepModel.class);
-			Object invoke = declaredMethod.invoke(actions, tm);
-			if (null != invoke) {
-				result.add((String) invoke);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
+	
+	public String getFailMessage(){
+		return resultMessage;
+	}
+	
+public List<Object> executeActionSequence(TestStepModel tm){
+	
+		String action=tm.getTestcase_action();
+		List<Object> result=new ArrayList<>();
+	try{
+		Method declaredMethod ;
+		Actions actions=new Actions();
+		declaredMethod = Actions.class.getDeclaredMethod(action,TestStepModel.class);
+		Object invoke = declaredMethod.invoke(actions,tm);
+		if(null!=invoke){
+			result.add((String)invoke);
 		}
-		return result;
+	}
+	catch(Exception e){
+		e.printStackTrace();
+	}
+	return result;
+	
 
 	}
 

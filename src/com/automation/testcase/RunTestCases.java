@@ -19,14 +19,14 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
-import com.automation.action.ActionExecution;
-import com.automation.action.ActionUtil;
-import com.automation.action.TestCaseMapper;
-import com.automation.action.TestStepModel;
 import com.automation.core.util.WebDriverUtil;
 import com.automation.util.ConfigReader;
 import com.automation.util.ConnectionUtil;
 import com.automation.util.ExcelUtil;
+import com.xceleratorninja.action.ActionExecution;
+import com.xceleratorninja.action.ActionUtil;
+import com.xceleratorninja.action.TestCaseMapper;
+import com.xceleratorninja.action.TestStepModel;
 
 
 
@@ -113,7 +113,7 @@ public class RunTestCases {
 	
 	
 	@Before
-	public void precondition(){
+	public void precondition(){/*
 		
 		ConnectionUtil util=new ConnectionUtil();
 		Connection connection = util.getConnection();
@@ -121,51 +121,12 @@ public class RunTestCases {
 		util.closeConnection();
 		
 	
-		}
+		*/}
 
-	private void resetUsers(ConnectionUtil util, Connection connection) {
-		String updatequery="update profiles set email_address = ? ,phone =? where email_address = ?";
-	      try {
-	    	  PreparedStatement preparedStmt = connection.prepareStatement(updatequery);
-	    	   String nextEmail = nextEmail();
-	    	   String nextPhoneNo = nextPhoneNo();
-	    	  preparedStmt.setString(1, nextEmail);
-	    	  preparedStmt.setString(2, nextPhoneNo);
-	    	  preparedStmt.setString(3, reader.getKeyValue("test.user"));
-	    	  util.updateRecords(updatequery, preparedStmt);
-	    	  
-	    	   updatequery="update users set username = ? ,email =? where email = ?";
-	    	   preparedStmt = connection.prepareStatement(updatequery);
-	    	  preparedStmt.setString(1, nextEmail);
-	    	  preparedStmt.setString(2, nextEmail);
-	    	  preparedStmt.setString(3, reader.getKeyValue("test.user"));
-	    	  util.updateRecords(updatequery, preparedStmt);
-	    	  
-	    	  
-		} catch (SQLException e) {
-			logger.error("Update is failled for tables profiles and users");
-			e.printStackTrace();
-		}
-	}
+
 	
 	
-	public String nextEmail() {
-		SecureRandom random = new SecureRandom();
-		String email = new BigInteger(130, random).toString(32);
-	    return email+"@gmail.com";
-	  }
-	
-	public String nextPhoneNo() {
-		SecureRandom random = new SecureRandom();
-		long maximum=9999999999l;
-		int minimum=1000000000;
-		long randomNum =  random.nextInt(minimum)+ minimum;
-		if(randomNum>maximum){
-			randomNum=randomNum-minimum;
-		}
-		return randomNum+"";
-	  }
-	
+
 
 	
 	
