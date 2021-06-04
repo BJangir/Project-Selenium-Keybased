@@ -24,7 +24,7 @@
       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
       <automation.deps.scope>compile</automation.deps.scope>
       <selenium.server.version>3.0.1</selenium.server.version>
-      <http.client.version>4.5.3</http.client.version>
+      <http.client.version>4.5.13</http.client.version>
    </properties>
    <repositories>
       <repository>
